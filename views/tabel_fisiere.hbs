@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/jquery.fancybox.css">
+    <script type="text/javascript" src="javascripts/fancybox/source/jquery.fancybox.pack.js"></script>
+</head>
+
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <a href="/" style="text-decoration:none">
+            <h1>{{title}}</h1>
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/upload_fisier">Upload fisier</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/tabel_fisiere">Tabel fisiere</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table id="tabel" class="display" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>Nume</th>
+                    <th>Thumb</th>
+                    <th>QR</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {{#each fisiere}}
+                    <tr>
+                        <td>{{nume}}</td>
+                        <td>
+                            <a href="{{fullURL}}" class="fancybox" title="{{nume}}"><img src="{{thumbURL}}"/></a>
+                            </a>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#tabel').DataTable();
+        $('.fancybox').fancybox();
+    });
+</script>
+
+</body>
+</html>

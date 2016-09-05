@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div class="row">
+    <a href="/" style="text-decoration:none">
+        <h1>{{title}}</h1>
+    </a>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="/upload_fisier">Upload fisier</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/tabel_fisiere">Tabel fisiere</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <form role="form" action="/upload_fisier" method="post" enctype="multipart/form-data" id="uploadForm">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="Nume" name="nume" placeholder="denumire fisier">
+                </div>
+
+                <label class="btn btn-default btn-file">
+                    Browse <input type="file" name="fisierUpload" style="display: none;"
+                                  accept="application/x-zip-compressed,image/*">
+                </label>
+
+                <button type="submit" class="btn btn-danger">Upload</button>
+            </div>
+        </form>
+    </div>
+    <span id="status"></span>
+</div>
+
+<!--Indica progrseul in SPANUL cu id="status"-->
+<!--
+<script>
+    $(document).ready(function () {
+        $('#uploadForm').submit(function ()
+        {
+            $("#status").empty().text("File is uploading...");
+            //disable refresh pagina
+            return false;
+        });
+    });
+</script>
+-->
+
+</body>
+</html>
