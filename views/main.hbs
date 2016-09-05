@@ -12,9 +12,17 @@
 
 <body>
 <div class="row">
-    <a href="/" style="text-decoration:none">
-        <h1>{{title}}</h1>
-    </a>
+    <div class="col-md-3">
+        <a href="http://bluemind-software.ro/" style="text-decoration:none">
+            <img src="https://biz.prlog.org/bluemindsoftware/logo.jpg" style="height: 100px;">
+        </a>
+    </div>
+    <div class="col-md-9">
+        <a href="/" style="text-decoration:none">
+            <h1>{{title}}</h1>
+        </a>
+    </div>
+
 </div>
 
 <!--NAVIGARE
@@ -30,9 +38,10 @@
 
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-3">
         <form role="form" action="/" method="post" enctype="multipart/form-data" id="uploadForm">
             <div class="col-md-8">
+                <h2 class="lead">FORMULAR UPLOAD</h2>
                 <div class="form-group">
                     <input type="text" class="form-control" id="Nume" name="nume" placeholder="denumire fisier">
                 </div>
@@ -45,14 +54,8 @@
             </div>
         </form>
     </div>
-    <span id="status"></span>
-</div>
-<div class="row">
     <hr/>
-</div>
-
-<div class="row">
-    <div class="col-md-12">
+    <div class="col-md-9">
         <table id="tabel" class="display" cellspacing="0" width="100%">
             <thead>
             <tr>
@@ -65,7 +68,7 @@
             <tbody>
             {{#each fisiere}}
                 <tr>
-                    <td>{{nume}}</td>
+                    <td style="text-align: center; font-size:large">{{nume}}</td>
                     <td>
                         <a href="{{fullURL}}" class="fancybox" title="{{nume}}"><img src="{{thumbURL}}"/></a>
                         </a>
@@ -77,11 +80,11 @@
             </tbody>
         </table>
     </div>
+    <span id="status"></span>
 </div>
 <script>
 
-    $(document).ready(function()
-    {
+    $(document).ready(function () {
         $(".fancybox").fancybox();
         $("#tabel").DataTable();
     });

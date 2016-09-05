@@ -47,8 +47,10 @@ app.use('/users', users);
 
 
 //Functii Mongo
-var insertFisier = function (req) {
-    MongoClient.connect(url, function (err, db) {
+var insertFisier = function (req )
+{
+    MongoClient.connect(url, function (err, db)
+    {
         db.collection('fisiere').insertOne(
             {
                 "obiect": req.file,
@@ -59,6 +61,7 @@ var insertFisier = function (req) {
                 console.log("Fisier salvat in db.");
             });
         db.close();
+
     });
 };
 
@@ -74,7 +77,8 @@ var addThumbURL = function (db, src, destURL, fullURL, callback) {
 
 
 //Upload logic
-app.post('/', upload.single('fisierUpload'), function (req, res) {
+app.post('/', upload.single('fisierUpload'), function (req, res)
+{
     insertFisier(req);
 
     var src = req.file.path;
@@ -92,11 +96,15 @@ app.post('/', upload.single('fisierUpload'), function (req, res) {
 
 
     //copiere fisier pt creare thumbs in /thumbs si creare thumb prin PIPE
-    readStream.pipe(thumb).pipe(writeStream).on('finish', function () {
-        MongoClient.connect(url, function (err, db) {
+    readStream.pipe(thumb).pipe(writeStream).on('finish', function ()
+    {
+        MongoClient.connect(url, function (err, db)
+        {
             assert.equal(null, err);
 
-            addThumbURL(db, src, thmbURL, fullURL, function () {
+            addThumbURL(db, src, thmbURL, fullURL, function ()
+            {
+                res.redirect('back');
                 db.close();
             });
         });
