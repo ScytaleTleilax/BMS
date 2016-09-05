@@ -36,54 +36,84 @@
     </div>
 </div>-->
 
+<!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Adauga fisier</button>
+<hr/>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="container-fluid">
+                        <div class="col-md-12">
+                            <form role="form" action="/" method="post" enctype="multipart/form-data" id="uploadForm">
+                                <div class="col-md-8">
+                                    <h2 class="lead">FORMULAR UPLOAD</h2>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="Nume" name="nume"
+                                               placeholder="denumire fisier">
+                                    </div>
+
+                                    <label class="btn btn-default btn-file">
+                                        Browse <input id="fisierUpload" type="file" name="fisierUpload"
+                                                      style="display: none;"
+                                                      accept="application/x-zip-compressed,image/*">
+                                    </label>
+                                    <button type="submit" class="btn btn-danger">Upload</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+
+            </div>
+        </div>
+
+    </div>
+</div>
 
 <div class="row">
-    <div class="col-md-3">
-        <form role="form" action="/" method="post" enctype="multipart/form-data" id="uploadForm">
-            <div class="col-md-8">
-                <h2 class="lead">FORMULAR UPLOAD</h2>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="Nume" name="nume" placeholder="denumire fisier">
-                </div>
+    <div class="container-fluid">
 
-                <label class="btn btn-default btn-file">
-                    Browse <input id="fisierUpload" type="file" name="fisierUpload" style="display: none;"
-                                  accept="application/x-zip-compressed,image/*">
-                </label>
-                <button type="submit" class="btn btn-danger">Upload</button>
-            </div>
-        </form>
-    </div>
-    <hr/>
-    <div class="col-md-9">
-        <table id="tabel" class="display" cellspacing="0" width="100%">
-            <thead>
-            <tr>
-                <th>Nume</th>
-                <th>Thumb</th>
-                <th>QR</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            {{#each fisiere}}
+        <div class="col-md-12">
+            <table id="tabel" class="display" cellspacing="0" width="100%">
+                <thead>
                 <tr>
-                    <td style="text-align: center; font-size:large">{{nume}}</td>
-
-                    <td>
-                        <a href="{{fullURL}}" class="fancybox" title="{{nume}}"><img src="{{thumbURL}}"/></a>
-                        </a>
-                    </td>
-
-                    <td>
-                        <a href="{{QRurl}}" class="fancybox" title="{{nume}}"><img src="{{QRurl}}" style="height: 100px;width:100px"/></a>
-                    </td>
+                    <th>Nume</th>
+                    <th>Thumb</th>
+                    <th>QR</th>
                 </tr>
-            {{/each}}
-            </tbody>
-        </table>
+                </thead>
+
+                <tbody>
+                {{#each fisiere}}
+                    <tr>
+                        <td style="text-align: center; font-size:large">{{nume}}</td>
+
+                        <td>
+                            <a href="{{fullURL}}" class="fancybox" title="{{nume}}"><img src="{{thumbURL}}"/></a>
+                            </a>
+                        </td>
+
+                        <td>
+                            <a href="{{QRurl}}" class="fancybox" title="{{nume}}"><img src="{{QRurl}}"
+                                                                                       style="height: 100px;width:100px"/></a>
+                        </td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
     </div>
-    <span id="status"></span>
 </div>
 <script>
 
