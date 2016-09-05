@@ -6,10 +6,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var fs = require('fs');
-var util = require('util');
+var qr = require('qr-image');
 var imS = require('imagemagick-stream');
 var multer = require('multer');
-var stream = require('stream');
 var storage = multer.diskStorage
 (
     {
@@ -47,10 +46,8 @@ app.use('/users', users);
 
 
 //Functii Mongo
-var insertFisier = function (req )
-{
-    MongoClient.connect(url, function (err, db)
-    {
+var insertFisier = function (req) {
+    MongoClient.connect(url, function (err, db) {
         db.collection('fisiere').insertOne(
             {
                 "obiect": req.file,
@@ -65,20 +62,25 @@ var insertFisier = function (req )
     });
 };
 
-var addThumbURL = function (db, src, destURL, fullURL, callback) {
+var addThumbURL = function (db, src, destURL, fullURL, QRurl, callback) {
     db.collection('fisiere').updateOne(
         {"obiect.path": src},
-        {$set: {"thumbURL": destURL, "fullURL": fullURL}},
+        {
+            $set: {
+                "thumbURL": destURL,
+                "fullURL": fullURL,
+                "QRurl": QRurl
+            }
+        },
         function (err, results) {
             //console.log(results);
-            callback();
+            callback(results);
         });
 };
 
 
 //Upload logic
-app.post('/', upload.single('fisierUpload'), function (req, res)
-{
+app.post('/', upload.single('fisierUpload'), function (req, res) {
     insertFisier(req);
 
     var src = req.file.path;
@@ -94,16 +96,19 @@ app.post('/', upload.single('fisierUpload'), function (req, res)
     var thumb = imS().resize('100', '100', '^')
         .gravity('Center');
 
+    //Creaza png - QRcode din argul `fullURL`
+    var code = qr.image(fullURL, {type: 'png'});
+    var QRname = req.file.filename.slice(0, -3);
+    var QRurl ='/uploads/barcodes/' + QRname + 'png';
+    var output = fs.createWriteStream(__dirname + '/public/uploads/barcodes/' + QRname + 'png');
+    code.pipe(output);
 
     //copiere fisier pt creare thumbs in /thumbs si creare thumb prin PIPE
-    readStream.pipe(thumb).pipe(writeStream).on('finish', function ()
-    {
-        MongoClient.connect(url, function (err, db)
-        {
+    readStream.pipe(thumb).pipe(writeStream).on('finish', function () {
+        MongoClient.connect(url, function (err, db) {
             assert.equal(null, err);
 
-            addThumbURL(db, src, thmbURL, fullURL, function ()
-            {
+            addThumbURL(db, src, thmbURL, fullURL, QRurl, function (results) {
                 res.redirect('back');
                 db.close();
             });
