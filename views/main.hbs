@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="javascripts/fancybox/source/jquery.fancybox.pack.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/jquery.fancybox.css">
+</head>
+
+<body>
+<div class="row">
+    <a href="/" style="text-decoration:none">
+        <h1>{{title}}</h1>
+    </a>
+</div>
+
+<!--NAVIGARE
+    <div class="row">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="#"></a>
+            </li>
+        </ul>
+    </div>
+</div>-->
+
+
+<div class="row">
+    <div class="col-md-12">
+        <form role="form" action="/upload_fisier" method="post" enctype="multipart/form-data" id="uploadForm">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="Nume" name="nume" placeholder="denumire fisier">
+                </div>
+
+                <label class="btn btn-default btn-file">
+                    Browse <input id="fisierUpload" type="file" name="fisierUpload" style="display: none;"
+                                  accept="application/x-zip-compressed,image/*">
+                </label>
+                <button type="submit" class="btn btn-danger">Upload</button>
+            </div>
+        </form>
+    </div>
+    <span id="status"></span>
+</div>
+<div class="row">
+    <hr/>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table id="tabel" class="display" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+                <th>Nume</th>
+                <th>Thumb</th>
+                <th>QR</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {{#each fisiere}}
+                <tr>
+                    <td>{{nume}}</td>
+                    <td>
+                        <a href="{{fullURL}}" class="fancybox" title="{{nume}}"><img src="{{thumbURL}}"/></a>
+                        </a>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function()
+    {
+        $(".fancybox").fancybox();
+        $("#tabel").DataTable();
+    });
+
+</script>
+</body>
+</html>
