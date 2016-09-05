@@ -15,6 +15,7 @@
     "hbs": "~4.0.0",
     "image-min": "^0.3.2",
     "imageMagick": "^0.1.2",
+    "imagemagick-stream": "^4.1.1",
     "imagemin": "^5.2.2",
     "install": "^0.8.1",
     "mongo-datatable": "^0.4.1",

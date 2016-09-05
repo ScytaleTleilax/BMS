@@ -7,11 +7,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var fs = require('fs');
 var util = require('util');
-var im = require('gm').subClass({imageMagick: true});
 var imS = require('imagemagick-stream');
 var multer = require('multer');
 var stream = require('stream');
-var bwip = require('bwip');
 var storage = multer.diskStorage
 (
     {
@@ -48,9 +46,8 @@ app.use('/', routes);
 app.use('/users', users);
 
 
-
 //Functii Mongo
-var insertFisier = function (req, res) {
+var insertFisier = function (req) {
     MongoClient.connect(url, function (err, db) {
         db.collection('fisiere').insertOne(
             {
@@ -77,8 +74,8 @@ var addThumbURL = function (db, src, destURL, fullURL, callback) {
 
 
 //Upload logic
-app.post('/upload_fisier', upload.single('fisierUpload'), function (req, res) {
-    insertFisier(req, res);
+app.post('/', upload.single('fisierUpload'), function (req, res) {
+    insertFisier(req);
 
     var src = req.file.path;
     var dest = __dirname + '/public/uploads/thumbs/' + req.file.filename;
@@ -89,34 +86,14 @@ app.post('/upload_fisier', upload.single('fisierUpload'), function (req, res) {
     var thmbURL = "/uploads/thumbs/" + req.file.filename;
     var fullURL = "/uploads/" + req.file.filename;
 
-    //optiuni BAR CODE
-    var bcid = 'code128';
-    var wscale = 4;
-    var hscale = 4;
-    var rotate = 'L';
-    var text = fullURL;
-
-
     //TODO citeste https://github.com/eivindfjeldstad/imagemagick-stream
     var thumb = imS().resize('100', '100', '^')
         .gravity('Center');
 
 
     //copiere fisier pt creare thumbs in /thumbs si creare thumb prin PIPE
-    readStream.pipe(thumb).pipe(writeStream).on('finish', function ()
-    {
-
-        //png este un BUFFER ,trebuie transofrmat intr-un STREAM pt. a-l putea scrie in fisier
-        var png = bwip.png(bcid, text, wscale, hscale, rotate);
-        fs.writeFile("/public/uploads/barcodes/aaaaaaaaaaaaargh.png", png, 'base64', function(err) {
-            console.log(err);
-        });
-
-
-
-
-        MongoClient.connect(url, function (err, db)
-        {
+    readStream.pipe(thumb).pipe(writeStream).on('finish', function () {
+        MongoClient.connect(url, function (err, db) {
             assert.equal(null, err);
 
             addThumbURL(db, src, thmbURL, fullURL, function () {
