@@ -79,9 +79,9 @@ var addThumbURL = function (db, src, destURL, fullURL, QRurl, callback) {
 
 
 //Upload logic
-app.post('/', upload.single('fisierUpload'), function (req, res) {
+app.post('/', upload.single('fisierUpload'), function (req, res) 
+{
 	insertFisier(req);
-
 	var src = req.file.path;
 	var dest = __dirname + '/public/uploads/thumbs/' + req.file.filename;
 	var readStream = fs.createReadStream(src);
@@ -99,11 +99,11 @@ app.post('/', upload.single('fisierUpload'), function (req, res) {
 
 
 	var thumb = imS()
-					.op('thumbnail','200x200>')
+					.op('thumbnail','300x300>')
 					.op('orient','Top-Left')
 					.gravity('Center')
 					.set('background','white')
-					.op('extent','200x200');
+					.op('extent','300x300');
 
 
 	readStream.pipe(thumb).pipe(writeStream).on('finish', function () {
