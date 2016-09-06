@@ -100,7 +100,7 @@ app.post('/', upload.single('fisierUpload'), function (req, res) {
 	code.pipe(output);
 
 
-	var thumb = imS().op('resize','200x200').set('background','white').gravity('Center').op('extent','200x200');
+	var thumb = imS().op('resize','200x200').op('orient','Top-Left').gravity('Center').set('background','white').op('extent','200x200');
 
 
 	readStream.pipe(thumb).pipe(writeStream).on('finish', function () {
