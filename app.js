@@ -7,8 +7,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var fs = require('fs');
 var qr = require('qr-image');
-var spawn = require('child_process').spawn;
-var gm = require('gm').subClass({ imageMagick: true });
 var imS = require('imagemagick-stream');
 var multer = require('multer');
 var storage = multer.diskStorage
@@ -101,7 +99,7 @@ app.post('/', upload.single('fisierUpload'), function (req, res) {
 
 
 	var thumb = imS()
-					.op('resize','200x200')
+					.op('thumbnail','200x200>')
 					.op('orient','Top-Left')
 					.gravity('Center')
 					.set('background','white')
