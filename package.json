@@ -12,6 +12,7 @@
     "express": "~4.13.4",
     "gm": "^1.23.0",
     "hbs": "~4.0.0",
+    "imagemagick-stream": "^4.1.1",
     "install": "^0.8.1",
     "mongodb": "^2.2.7",
     "morgan": "~1.7.0",
